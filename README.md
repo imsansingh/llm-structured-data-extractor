@@ -34,7 +34,7 @@ cd document_extractor
 Bash
 python -m venv venv
 source venv/bin/activate  # On Linux/macOS
-# venv\Scripts\activate  # On Windows
+venv\Scripts\activate  # On Windows
 4. Install Dependencies
 Install the required libraries listed in requirements.txt:
 
@@ -57,83 +57,6 @@ Bash
 streamlit run document_extractor_app.py
 The app will launch in your web browser, typically at http://localhost:8501.
 
-⚙️ Extracted JSON Structure
-The Gemini model is prompted to extract data into the following standardized JSON format, excluding any fields whose value is null:
-
-JSON
-{
-	"document_info": {
-		"document_type": "string or null",
-		"document_number": "string or null",
-		"date": "string or null",
-		"due_date": "string or null",
-		"currency": "string or null"
-	},
-	"vendor_info": {
-		"company_name": "string or null",
-		"address": "string or null",
-		"phone": "string or null",
-		"email": "string or null",
-		"tax_id": "string or null"
-	},
-	"customer_info": {
-		"company_name": "string or null",
-		"address": "string or null",
-		"phone": "string or null",
-		"email": "string or null"
-	},
-	"line_items": [
-		{
-			"description": "string or null",
-			"quantity": "float or null",
-			"unit_price": "float or null",
-			"total_price": "float or null"
-		}
-	],
-	"totals": {
-		"subtotal": "float or null",
-		"tax_amount": "float or null",
-		"total_amount": "float or null"
-	},
-    // Optional: other business data like shipping address, delivery date, etc.
-}
-💡 Core Logic Overview
-The application is structured into the following main components:
-
-document_extractor_app.py (Streamlit UI & Orchestration):
-
-Sets up the Streamlit interface, including tabs for PDF and Excel processing.
-
-Handles file uploads and user input for bulk processing options.
-
-Defines extract_with_gemini(text, document_type) to construct the LLM prompt and handle the JSON response.
-
-Calls the appropriate processor functions (pdf_processor.py or excel_processor.py).
-
-pdf_processor.py:
-
-
-extract_text_from_pdf(pdf_file): Uses pdfplumber to extract all text from an uploaded file object.
-
-
-extract_text_from_pdf_path(pdf_path): Extracts text from a file located at a local path.
-
-
-process_pdf_folder(): Finds and processes all .pdf files in a given folder path, saving results to json_output_pdf.
-
-
-process_zip_file(): Extracts PDF files from an uploaded ZIP into a temporary directory and processes them.
-
-excel_processor.py:
-
-
-extract_text_from_excel(excel_file) / extract_text_from_excel_path(excel_path): Uses pandas with the openpyxl engine to read all sheets and formats the data (including column names and row values) into a single, readable text string for the LLM.
-
-
-process_excel_folder(): Processes all .xlsx and .xls files in a folder, saving results to json_output_excel.
-
-
-process_excel_zip_file(): Handles bulk processing from an uploaded ZIP archive.
 
 🤝 Contributing
 Contributions are welcome! Feel free to open an issue or submit a pull request for improvements, bug fixes, or new features.
