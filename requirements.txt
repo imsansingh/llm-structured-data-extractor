@@ -1,0 +1,17 @@
+python-dotenv
+streamlit
+google-generativeai
+pdfplumber
+pandas
+openpyxl 
+
+''' 
+Run the below command in the terminal to run the app :
+
+python -m streamlit run document_extractor_app.py --server.port 8501 --server.headless false
+
+or 
+
+streamlit run document_extractor_app.py --server.port 8501 --server.headless false
+
+'''
