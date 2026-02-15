@@ -219,4 +219,5 @@ def process_zip_file(uploaded_zip, extract_with_gemini_func):
 				'errors': [f"Error processing zip file: {str(e)}"],
 				'total_files': 0,
 				'files_found': []
+
 			} 
